@@ -1,0 +1,51 @@
+version: '3.6'
+
+networks:
+  2fauth-internal:
+
+services:
+  2fauth:
+    image: tommoulard/2fauth
+    build: .
+    ports:
+      - '80:8080'
+    environment:
+      - 'SITE_OWNER=tom@moulard.org'
+      - 'APP_KEY=${APP_KEY}'
+      - 'REDIS_HOST=2fauth-redis'
+      - 'DB_CONNECTION=postgres'
+      - 'DB_HOST=2fauth-postgres'
+      - 'DB_PORT=5432'
+      - 'DB_USER=postgres'
+      - 'DB_NAME=postgres'
+      - 'DB_PASSWORD=2fauth-postgres-pass'
+    volumes:
+      - './2fauth/db/:/2fauth/database/'
+    networks:
+      - '2fauth-internal'
+
+  2fauth-redis:
+    image: redis:6.0-alpine
+    restart: always
+    networks:
+      - '2fauth-internal'
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - './2fauth/redis:/data'
+
+  2fauth-postgres:
+    image: postgres:9.6-alpine
+    restart: always
+    user: '1000:1000'
+    shm_size: 256mb
+    networks:
+      - '2fauth-internal'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+    volumes:
+      - ./2fauth/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=2fauth-postgres-pass
+
+
