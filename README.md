@@ -15,4 +15,4 @@ For this image to properly work, I added some more env vars:
 |`APP_PORT` |The port to serve the application on [default: `80`]|
 |`APP_TRIES`|The max number of ports to attempt to serve from [default: `10`]|
 
-By example, you can add the content of (`docker-compose`)[https://github.com/tomMoulard/2FAuth-docker/blob/main/docker-compose.yml] to your infrastructure.
+By example, you can add the content of [`docker-compose`](https://github.com/tomMoulard/2FAuth-docker/blob/main/docker-compose.yml) to your infrastructure.
