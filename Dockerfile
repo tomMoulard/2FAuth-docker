@@ -7,24 +7,20 @@ RUN chown 1000:1000 /2fauth
 USER 1000:1000
 
 # $(php artisan key:generate) || $(head -c32 /dev/urandom | base64)
-# ENV DB_CONNECTION=sqlite
-# ENV DB_DATABASE="/2fauth/database/database.sqlite"
 
 ENV APP_NAME=2FAuth \
 	APP_ENV=local \
 	APP_DEBUG=false \
 	SITE_OWNER=mail@example.com \
 	APP_KEY=SomeRandomStringOf32CharsExactly \
-	APP_URL=http://localhost \
+	APP_URL=0.0.0.0 \
+	APP_PORT=80 \
+	APP_TRIES=10 \
+	DB_CONNECTION=sqlite \
+	DB_DATABASE="/2fauth/database/database.sqlite" \
 	IS_DEMO_APP=false \
 	LOG_CHANNEL=daily \
 	APP_LOG_LEVEL=notice \
-	DB_CONNECTION=mysql \
-	DB_HOST=127.0.0.1 \
-	DB_PORT=3306 \
-	DB_DATABASE=homestead \
-	DB_USERNAME=homestead \
-	DB_PASSWORD=secret \
 	CACHE_DRIVER=file \
 	SESSION_DRIVER=file \
 	MAIL_DRIVER=log \
@@ -54,11 +50,13 @@ RUN git clone -q https://github.com/Bubka/2FAuth /2fauth
 
 COPY ./startup.sh .
 
+RUN mkdir -p /2fauth/database/ && touch /2fauth/database/database.sqlite
+
 RUN composer -q install
 
-RUN mkdir -p database/ && touch database/database.sqlite
-
-RUN php artisan config:cache
+RUN php artisan migrate:refresh
+RUN php artisan passport:install
 RUN php artisan storage:link
+RUN php artisan config:cache
 
 ENTRYPOINT ["/2fauth/startup.sh"]

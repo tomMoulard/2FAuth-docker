@@ -8,19 +8,16 @@ services:
     image: tommoulard/2fauth
     build: .
     ports:
-      - '80:8080'
+      - '8080:8080'
     environment:
       - 'SITE_OWNER=tom@moulard.org'
       - 'APP_KEY=${APP_KEY}'
+      - 'APP_PORT=8080'
       - 'REDIS_HOST=2fauth-redis'
-      - 'DB_CONNECTION=postgres'
-      - 'DB_HOST=2fauth-postgres'
-      - 'DB_PORT=5432'
-      - 'DB_USER=postgres'
-      - 'DB_NAME=postgres'
-      - 'DB_PASSWORD=2fauth-postgres-pass'
-    volumes:
-      - './2fauth/db/:/2fauth/database/'
+      - 'DB_CONNECTION=sqlite'
+      - 'DB_DATABASE=/2fauth/database/database.sqlite'
+    # volumes:
+      # - './2fauth/db/:/2fauth/database/'
     networks:
       - '2fauth-internal'
 
@@ -33,19 +30,5 @@ services:
       test: ["CMD", "redis-cli", "ping"]
     volumes:
       - './2fauth/redis:/data'
-
-  2fauth-postgres:
-    image: postgres:9.6-alpine
-    restart: always
-    user: '1000:1000'
-    shm_size: 256mb
-    networks:
-      - '2fauth-internal'
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
-    volumes:
-      - ./2fauth/postgres:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=2fauth-postgres-pass
 
 
