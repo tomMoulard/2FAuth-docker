@@ -1,4 +1,4 @@
-FROM composer:2.0
+FROM composer:1.10.19
 
 WORKDIR /2fauth
 
