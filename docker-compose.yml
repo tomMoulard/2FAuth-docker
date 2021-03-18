@@ -14,7 +14,7 @@ services:
       - 'APP_KEY=${APP_KEY}'
       - 'APP_PORT=8080'
       - 'REDIS_HOST=2fauth-redis'
-      - 'DB_CONNECTION=postgres'
+      - 'DB_CONNECTION=pgsql'
       - 'DB_HOST=2fauth-postgres'
       - 'DB_PORT=5432'
       - 'DB_USER=postgres'

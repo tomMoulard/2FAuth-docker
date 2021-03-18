@@ -54,9 +54,5 @@ RUN mkdir -p /2fauth/database/ && touch /2fauth/database/database.sqlite
 
 RUN composer -q install
 
-RUN php artisan migrate:refresh
-RUN php artisan passport:install
-RUN php artisan storage:link
-RUN php artisan config:cache
 
 ENTRYPOINT ["/2fauth/startup.sh"]
