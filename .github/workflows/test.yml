@@ -8,5 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: docker-compose pull
+      - uses: satackey/action-docker-layer-caching@v0.0.11
       - name: Run tests
         run: make test
+      - name: Gather logs
+        if: failure()
+        run: docker-compose logs > docker-compose.log
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: log-artifacts
+          path: docker-compose.log

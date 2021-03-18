@@ -6,7 +6,10 @@ build:
 up:
 	docker-compose up
 
-test: build up sleep tests
+upd:
+	docker-compose up -d
+
+test: build upd sleep tests
 
 sleep:
 	sleep 10s
