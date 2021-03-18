@@ -4,6 +4,8 @@ WORKDIR /2fauth
 
 RUN chown 1000:1000 /2fauth
 
+RUN apk add php7-pgsql php7-pdo php7-pdo_pgsql
+
 USER 1000:1000
 
 # $(php artisan key:generate) || $(head -c32 /dev/urandom | base64)
@@ -48,11 +50,10 @@ ENV APP_NAME=2FAuth \
 
 RUN git clone -q https://github.com/Bubka/2FAuth /2fauth
 
-COPY ./startup.sh .
-
 RUN mkdir -p /2fauth/database/ && touch /2fauth/database/database.sqlite
 
 RUN composer -q install
 
+COPY ./startup.sh .
 
 ENTRYPOINT ["/2fauth/startup.sh"]
