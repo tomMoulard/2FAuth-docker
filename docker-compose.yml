@@ -41,7 +41,7 @@ services:
   2fauth-postgres:
     image: postgres:9.6-alpine
     restart: always
-    user: '1000:1000'
+    # user: '1000:1000'
     shm_size: 256mb
     networks:
       - '2fauth-internal'
