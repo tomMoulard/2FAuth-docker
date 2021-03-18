@@ -17,6 +17,8 @@ jobs:
         run: |
           docker-compose logs --no-color > docker-compose.log
           docker-compose ps >> docker-compose.log
+          docker-compose logs
+          docker-compose ps
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
