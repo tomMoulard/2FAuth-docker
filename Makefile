@@ -12,7 +12,7 @@ upd:
 	docker-compose up -d
 
 
-test: build upd sleep tests
+test: upd sleep tests
 
 sleep:
 	sleep 10s
