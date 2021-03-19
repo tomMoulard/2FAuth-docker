@@ -8,7 +8,7 @@ up:
 
 upd:
 	docker-compose up -d 2fauth-postgres
-	sleep 1
+	sleep 5
 	docker-compose up -d
 
 
