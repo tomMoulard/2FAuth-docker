@@ -4,7 +4,8 @@ WORKDIR /2fauth
 
 RUN chown 1000:1000 /2fauth
 
-RUN apk add php7-pgsql php7-pdo php7-pdo_pgsql
+RUN apk add --no-cache postgresql-dev
+RUN docker-php-ext-install pdo_pgsql
 
 USER 1000:1000
 
