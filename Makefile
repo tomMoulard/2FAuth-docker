@@ -7,7 +7,10 @@ up:
 	docker-compose up
 
 upd:
+	docker-compose up -d postgres
+	sleep 1
 	docker-compose up -d
+
 
 test: build upd sleep tests
 
