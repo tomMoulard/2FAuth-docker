@@ -7,7 +7,7 @@ up:
 	docker-compose up
 
 upd:
-	docker-compose up -d postgres
+	docker-compose up -d 2fauth-postgres
 	sleep 1
 	docker-compose up -d
 
