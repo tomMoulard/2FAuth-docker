@@ -22,8 +22,8 @@ services:
       - 'DB_DATABASE=postgres'
       - 'DB_NAME=postgres'
       - 'DB_PASSWORD=2fauth-postgres-pass'
-    volumes:
-      - './2fauth/db/:/2fauth/database/'
+    # volumes:
+      # - './2fauth/db/:/2fauth/database/'
     networks:
       - '2fauth-internal'
     depends_on:
